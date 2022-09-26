@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adapter</title>
+</head>
+<script>
+    class EuropeanPlug {
+        europeanPlugIn() {
+            console.log("European PlugIn")
+        }
+    }
+
+    class AmericanPlug {
+        americanPlugIn() {
+            console.log("American PlugIn")
+        }
+    }
+
+    class American2EuropeanAdapter {
+        constructor(plug) {
+            this.plug = plug;
+        }
+
+        europeanPlugIn() {
+            this.plug.americanPlugIn();
+        }
+    }
+
+    class Socket {
+        plugIn(plug) {
+            plug.europeanPlugIn();
+        }
+    }
+
+    // EuropeanPlug
+    const socket = new Socket();
+    const euroPlug = new EuropeanPlug();
+    socket.plugIn(euroPlug); // EuropeanSocket PlugIn
+
+    // AmericanPlug Adapter
+    const adapter = new American2EuropeanAdapter(new AmericanPlug()); 
+    socket.plugIn(adapter); // //AmericanSocket PlugIn
+
+    const americanPlug = new AmericanPlug();
+    socket.plugIn(americanPlug); //  ERROR
+
+</script>
+<body>
+    
+</body>
+</html>

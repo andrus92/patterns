@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command</title>
+</head>
+<script>
+    class Spectator {
+        constructor(command) {
+            this.command = command;
+        }
+        execute() {
+            this.command.execute();
+        }
+    }
+
+    class TvSet {
+        constructor() {
+            this.state = false;
+        }
+
+        on() {
+            this.state = true;
+        }
+
+        off() {
+            this.state = false;
+        }
+    }
+
+    class SwitchOnCmd {
+        constructor(tvset) {
+            this.tvset = tvset;
+        }
+
+        execute() {
+            this.tvset.on();
+        }
+    }
+
+    class SwitchOffCmd {
+        constructor(tvset) {
+            this.tvset = tvset;
+        }
+
+        execute() {
+            this.tvset.off();
+        }
+    }
+
+    const tvset = new TvSet();
+    const switchOnCmd = new SwitchOnCmd(tvset);
+    const switchOffCmd = new SwitchOffCmd(tvset);
+
+    console.log('Initial state:' + tvset.state);
+
+    // Switch on TV
+    let spectator = new Spectator(switchOnCmd);
+    spectator.execute();
+    console.log('After switching on:' + tvset.state);
+
+    // Switch off TV
+    spectator = new Spectator(switchOffCmd);
+    spectator.execute();
+    console.log('After switching off:' + tvset.state);
+
+</script>
+<body>
+    
+</body>
+</html>
